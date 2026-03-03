@@ -1,15 +1,14 @@
 import { notFound } from "next/navigation";
-import { PrinterIcon } from "lucide-react";
 
 import { getOrderById } from "@/lib/dal";
 import { ORDER_STATUS } from "@/lib/prisma/enums";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { FloatingLabelInput } from "@/components/ui/floating-label-input";
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
 import { Separator } from "@/components/ui/separator";
 import { OrderDetails } from "@/components/dashboard/orders/order-details";
 import { ProductImage } from "@/components/product/product-image";
+import { PrintOrder } from "@/components/dashboard/orders/print-order";
 
 export default async function DashboardOrderByIdPage({ params }: { params: Promise<{ orderId: string }> }) {
 	const { orderId } = await params;
@@ -55,10 +54,7 @@ export default async function DashboardOrderByIdPage({ params }: { params: Promi
 		<div className="grid gap-4 text-sm md:grid-cols-2 md:gap-6">
 			<div className="flex items-center justify-between md:col-span-2">
 				<h1 className="text-xl/9 font-semibold">Order Details</h1>
-				<Button>
-					<PrinterIcon />
-					Print
-				</Button>
+				<PrintOrder orderId={orderId} order={order} />
 			</div>
 
 			<FloatingLabelInput placeholder="Order ID" value={orderId.toUpperCase()} readOnly />
